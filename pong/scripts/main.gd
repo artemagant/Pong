@@ -2,7 +2,7 @@ extends Node2D
 
 var up:bool
 var down:bool
-const SPEED = 3
+const SPEED = 300
 var direction_x:int
 var direction_y:int
 
@@ -13,20 +13,22 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	while direction_x == 0:
 		direction_x = randi_range(-1, 1)
 		return
 	while  direction_y == 0:
 		direction_y = randi_range(-1, 1)
-	if up and $Player.position.y > 102:
-		$Player.position.y -= SPEED
-	elif $Player.position.y < 104:
-		$Player.position.y = 104
-	if down and $Player.position.y < 573:
-		$Player.position.y += SPEED
-	elif $Player.position.y > 576:
-		$Player.position.y = 576
+	
+	if up and $Player.position.y > 5:
+		$Player.position.y -= SPEED * delta
+	elif $Player.position.y < 5:
+		$Player.position.y = 5
+
+	if down and $Player.position.y < 477:
+		$Player.position.y += SPEED * delta
+	elif $Player.position.y > 477:
+		$Player.position.y = 477
 	
 	if $ball.position.x >= 1137:
 		direction_x = -1
@@ -36,8 +38,8 @@ func _process(_delta: float) -> void:
 		direction_y = 1
 	elif $ball.position.y >= 633:
 		direction_y = -1
-	$ball.position.x += SPEED * direction_x
-	$ball.position.y += SPEED * direction_y
+	$ball.position.x += SPEED * direction_x * delta
+	$ball.position.y += SPEED * direction_y * delta
 
 
 func _on_left_button_mean_up_pressed() -> void:
