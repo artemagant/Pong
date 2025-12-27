@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ceu771rqxpk0b"]
+[gd_scene load_steps=9 format=3 uid="uid://ceu771rqxpk0b"]
 
 [ext_resource type="Script" uid="uid://jrjectm2vb7w" path="res://scripts/main.gd" id="1_o5qli"]
+[ext_resource type="AudioStream" uid="uid://bj2ithld68cke" path="res://sounds/Ball_bounse.mp3" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://c17eggyjyr0xd" path="res://art/Settings_Buttot_Icon.png" id="2_jyhfs"]
+[ext_resource type="AudioStream" uid="uid://dfnmxkhrr63pq" path="res://sounds/song_theme.mp3" id="3_sugp2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sgp6g"]
 bg_color = Color(0, 0, 0, 1)
@@ -9,12 +12,37 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
+bg_color = Color(0.21904597, 0.219046, 0.21904597, 0.4392157)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.7647059)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="CanvasTexture" id="CanvasTexture_0wfyh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
+bg_color = Color(0.0609778, 0.064023085, 0, 0.85490197)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.8)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_o5qli")
 
 [node name="Panel" type="Panel" parent="."]
+z_index = -2
 offset_right = 1152.0
 offset_bottom = 648.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_sgp6g")
@@ -55,19 +83,43 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 100
 text = "0"
 
+[node name="settings_button" type="Panel" parent="."]
+offset_left = 532.411
+offset_top = 9.988
+offset_right = 618.411
+offset_bottom = 95.988
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jyhfs")
+
+[node name="Button" type="Button" parent="settings_button"]
+z_index = 1
+texture_filter = 1
+layout_mode = 1
+offset_left = -4.23
+offset_top = -5.147
+offset_right = 19.77
+offset_bottom = 18.853
+scale = Vector2(4, 4)
+focus_mode = 0
+icon = ExtResource("2_jyhfs")
+flat = true
+
 [node name="left_button_mean_up" type="TouchScreenButton" parent="."]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(6, 5)
-scale = Vector2(573, 637)
+position = Vector2(39, 5)
+scale = Vector2(540, 637)
 texture_normal = SubResource("CanvasTexture_0wfyh")
+action = "up"
 
 [node name="right_button_mean_down" type="TouchScreenButton" parent="."]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(580, 8)
 scale = Vector2(573, 637)
 texture_normal = SubResource("CanvasTexture_0wfyh")
+action = "down"
 
 [node name="line_betwin_sides" type="Line2D" parent="."]
+z_index = -1
 points = PackedVector2Array(576, 5, 576, 643)
 width = 3.0
 
@@ -108,7 +160,72 @@ offset_top = 223.0
 offset_right = 1130.0
 offset_bottom = 389.0
 
-[connection signal="pressed" from="left_button_mean_up" to="." method="_on_left_button_mean_up_pressed"]
-[connection signal="released" from="left_button_mean_up" to="." method="_on_left_button_mean_up_released"]
-[connection signal="pressed" from="right_button_mean_down" to="." method="_on_right_button_mean_down_pressed"]
-[connection signal="released" from="right_button_mean_down" to="." method="_on_right_button_mean_down_released"]
+[node name="ball_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_0wfyh")
+volume_db = -5.0
+pitch_scale = 4.0
+
+[node name="music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_sugp2")
+volume_db = -12.0
+pitch_scale = 1.2
+autoplay = true
+parameters/looping = true
+
+[node name="settings" type="Panel" parent="."]
+visible = false
+z_index = 5
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 176.0
+offset_top = 74.0
+offset_right = 976.0
+offset_bottom = 574.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Music" type="Panel" parent="settings"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -150.0
+offset_right = 225.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tbgi4")
+
+[node name="HSlider" type="HSlider" parent="settings/Music"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -50.0
+offset_right = 200.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="settings"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -31.0
+offset_right = 31.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 45
+text = "Settings"
+
+[connection signal="pressed" from="settings_button/Button" to="." method="_on_button_pressed"]
