@@ -116,8 +116,17 @@ func move_enemy(sped, delta):
 
 
 func _on_button_pressed() -> void:
-	settings = true
-	current_speed = speed
-	speed = 0
-	$settings.visible = true
-	$music.volume_db -= 10
+	if settings == false:
+		settings = true
+		current_speed = speed
+		speed = 0
+		$settings.visible = true
+		$music.volume_db -= 10
+
+
+func _on_continue_button_pressed() -> void:
+	if settings == true:
+		settings = false
+		speed = current_speed
+		$settings.visible = false
+		$music.volume_db += 10

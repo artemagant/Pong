@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ceu771rqxpk0b"]
+[gd_scene load_steps=12 format=3 uid="uid://ceu771rqxpk0b"]
 
 [ext_resource type="Script" uid="uid://jrjectm2vb7w" path="res://scripts/main.gd" id="1_o5qli"]
 [ext_resource type="AudioStream" uid="uid://bj2ithld68cke" path="res://sounds/Ball_bounse.mp3" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://c17eggyjyr0xd" path="res://art/Settings_Buttot_Icon.png" id="2_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://dfnmxkhrr63pq" path="res://sounds/song_theme.mp3" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://cspwjsmh6f6lk" path="res://scenes/slider_music.gd" id="5_tbgi4"]
+[ext_resource type="Script" uid="uid://b3cdk4aad65i3" path="res://scenes/slider_sfx.gd" id="6_tefeu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sgp6g"]
 bg_color = Color(0, 0, 0, 1)
@@ -33,6 +35,18 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0, 0, 0, 0.8)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tefeu"]
+bg_color = Color(0.0627451, 0.0627451, 0, 0.85490197)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.84313726)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -143,10 +157,10 @@ text = "down"
 
 [node name="ball" type="ColorRect" parent="."]
 z_index = 1
-offset_left = 558.0
-offset_top = 240.0
-offset_right = 575.0
-offset_bottom = 257.0
+offset_left = 568.364
+offset_top = 303.907
+offset_right = 585.364
+offset_bottom = 320.907
 
 [node name="Player" type="ColorRect" parent="."]
 offset_left = 20.0
@@ -164,6 +178,7 @@ offset_bottom = 389.0
 stream = ExtResource("2_0wfyh")
 volume_db = -5.0
 pitch_scale = 4.0
+bus = &"SFX"
 
 [node name="music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_sugp2")
@@ -202,7 +217,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tbgi4")
 
-[node name="HSlider" type="HSlider" parent="settings/Music"]
+[node name="Slider_Music" type="HSlider" parent="settings/Music"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -215,6 +230,22 @@ offset_right = 200.0
 offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
+max_value = 5.0
+value = 1.0
+script = ExtResource("5_tbgi4")
+
+[node name="Label" type="Label" parent="settings/Music"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.5
+offset_top = -21.0
+offset_right = 42.5
+offset_bottom = 21.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Music"
 
 [node name="Label" type="Label" parent="settings"]
 layout_mode = 1
@@ -228,4 +259,83 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 45
 text = "Settings"
 
+[node name="continue_button" type="Panel" parent="settings"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -78.0
+offset_top = -90.0
+offset_right = 78.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tefeu")
+
+[node name="continue_button" type="Button" parent="settings/continue_button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -25.0
+offset_right = 68.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+text = "continue"
+flat = true
+
+[node name="SFX" type="Panel" parent="settings"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = 5.0
+offset_right = 225.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tbgi4")
+
+[node name="Slider_SFX" type="HSlider" parent="settings/SFX"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -50.0
+offset_right = 200.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 5.0
+value = 2.0
+script = ExtResource("6_tefeu")
+
+[node name="Label" type="Label" parent="settings/SFX"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.5
+offset_top = -21.0
+offset_right = 25.5
+offset_bottom = 21.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "SFX"
+
 [connection signal="pressed" from="settings_button/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="settings/continue_button/continue_button" to="." method="_on_continue_button_pressed"]
